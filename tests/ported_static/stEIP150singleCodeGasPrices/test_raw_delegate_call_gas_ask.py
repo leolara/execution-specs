@@ -15,6 +15,7 @@ from execution_testing import (
     StateTestFiller,
     Transaction,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -31,6 +32,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_raw_delegate_call_gas_ask(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_raw_delegate_call_gas_ask."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -77,9 +79,14 @@ def test_raw_delegate_call_gas_ask(
         gas_limit=500000,
     )
 
+    # EIP-8037 changes the gas measured here; re-pin the value.
+    gas_at_1 = 24736
+    if fork.is_eip_enabled(8037):
+        gas_at_1 = 105556
+
     post = {
         addr: Account(storage={}),
-        target: Account(storage={1: 24736, 2: 0x727BE}),
+        target: Account(storage={1: gas_at_1, 2: 0x727BE}),
     }
 
     state_test(env=env, pre=pre, post=post, tx=tx)

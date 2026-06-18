@@ -16,6 +16,7 @@ from execution_testing import (
     Transaction,
     compute_create_address,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -32,6 +33,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_raw_create_gas_value_transfer_memory(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_raw_create_gas_value_transfer_memory."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -65,8 +67,13 @@ def test_raw_create_gas_value_transfer_memory(
         value=10,
     )
 
+    # EIP-8037 changes the gas measured here; re-pin the value.
+    gas_at_1 = 33391
+    if fork.is_eip_enabled(8037):
+        gas_at_1 = 193991
+
     post = {
-        contract_0: Account(storage={1: 33391}),
+        contract_0: Account(storage={1: gas_at_1}),
         compute_create_address(address=contract_0, nonce=0): Account(
             balance=10
         ),

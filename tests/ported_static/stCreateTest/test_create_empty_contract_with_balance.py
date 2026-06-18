@@ -16,6 +16,7 @@ from execution_testing import (
     Transaction,
     compute_create_address,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -30,6 +31,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_create_empty_contract_with_balance(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_create_empty_contract_with_balance."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -63,12 +65,17 @@ def test_create_empty_contract_with_balance(
         gas_limit=600000,
     )
 
+    # EIP-8037 changes the gas measured here; re-pin the value.
+    gas_at_100 = 0x7ABF8
+    if fork.is_eip_enabled(8037):
+        gas_at_100 = 180536
+
     post = {
         contract_0: Account(
             storage={
                 0: 0x8D5B6,
                 1: compute_create_address(address=contract_0, nonce=0),
-                100: 0x7ABF8,
+                100: gas_at_100,
             },
         ),
         compute_create_address(address=contract_0, nonce=0): Account(

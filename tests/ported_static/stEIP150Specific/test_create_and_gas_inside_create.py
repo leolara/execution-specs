@@ -16,6 +16,7 @@ from execution_testing import (
     Transaction,
     compute_create_address,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -30,6 +31,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_create_and_gas_inside_create(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_create_and_gas_inside_create."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -63,15 +65,23 @@ def test_create_and_gas_inside_create(
         gas_limit=600000,
     )
 
+    # EIP-8037 changes the gas measured here; re-pin the value.
+    gas_at_9 = 0x129DB
+    if fork.is_eip_enabled(8037):
+        gas_at_9 = 398491
+    gas_at_253 = 0x83729
+    if fork.is_eip_enabled(8037):
+        gas_at_253 = 380319
+
     post = {
         contract_0: Account(
             storage={
-                9: 0x129DB,
+                9: gas_at_9,
                 11: compute_create_address(address=contract_0, nonce=0),
             },
         ),
         compute_create_address(address=contract_0, nonce=0): Account(
-            storage={253: 0x83729}
+            storage={253: gas_at_253}
         ),
     }
 
