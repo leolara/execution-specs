@@ -15,6 +15,7 @@ from execution_testing import (
     StateTestFiller,
     Transaction,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -31,6 +32,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_non_zero_value_callcode_to_empty_paris(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_non_zero_value_callcode_to_empty_paris."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -75,9 +77,15 @@ def test_non_zero_value_callcode_to_empty_paris(
         gas_limit=600000,
     )
 
+    # The gas this test measures rises on EIP-8037 because the call
+    # incurs the new state gas; re-pin the recorded value.
+    measured_gas = 31435
+    if fork.is_eip_enabled(8037):
+        measured_gas = 112255
+
     post = {
         addr: Account(storage={}, code=b"", balance=10, nonce=0),
-        target: Account(storage={1: 1, 100: 31435}),
+        target: Account(storage={1: 1, 100: measured_gas}),
     }
 
     state_test(env=env, pre=pre, post=post, tx=tx)

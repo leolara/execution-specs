@@ -15,6 +15,7 @@ from execution_testing import (
     StateTestFiller,
     Transaction,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -31,6 +32,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_non_zero_value_delegatecall_to_non_non_zero_balance(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_non_zero_value_delegatecall_to_non_non_zero_balance."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -73,9 +75,15 @@ def test_non_zero_value_delegatecall_to_non_non_zero_balance(
         gas_limit=600000,
     )
 
+    # The gas this test measures rises on EIP-8037 because the call
+    # incurs the new state gas; re-pin the recorded value.
+    measured_gas = 24732
+    if fork.is_eip_enabled(8037):
+        measured_gas = 105552
+
     post = {
         addr: Account(balance=100),
-        target: Account(storage={1: 1, 100: 24732}),
+        target: Account(storage={1: 1, 100: measured_gas}),
     }
 
     state_test(env=env, pre=pre, post=post, tx=tx)

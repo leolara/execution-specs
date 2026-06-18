@@ -8,7 +8,7 @@
 # Entries are substring-matched against each pytest nodeid (after
 # stripping the fixture-format suffix in conftest.py).
 #
-# Total entries: 258
+# Total entries: 247
 
 # stAttackTest (1)
 stAttackTest/test_crashing_transaction.py::test_crashing_transaction[fork_Amsterdam]
@@ -73,7 +73,7 @@ stCreate2/test_revert_depth_create_address_collision_berlin.py::test_revert_dept
 stCreate2/test_revert_depth_create_address_collision_berlin.py::test_revert_depth_create_address_collision_berlin[fork_Amsterdam-d1-g1-v0]
 stCreate2/test_revert_depth_create_address_collision_berlin.py::test_revert_depth_create_address_collision_berlin[fork_Amsterdam-d1-g1-v1]
 
-# stCreateTest (40)
+# stCreateTest (39)
 stCreateTest/test_create_address_warm_after_fail.py::test_create_address_warm_after_fail[fork_Amsterdam-create-0xef-v1]
 stCreateTest/test_create_address_warm_after_fail.py::test_create_address_warm_after_fail[fork_Amsterdam-create-contructor-revert-v1]
 stCreateTest/test_create_address_warm_after_fail.py::test_create_address_warm_after_fail[fork_Amsterdam-create-high-nonce-v1]
@@ -90,7 +90,6 @@ stCreateTest/test_create_address_warm_after_fail.py::test_create_address_warm_af
 stCreateTest/test_create_e_contract_create_ne_contract_in_init_oog_tr.py::test_create_e_contract_create_ne_contract_in_init_oog_tr[fork_Amsterdam--g0]
 stCreateTest/test_create_e_contract_create_ne_contract_in_init_oog_tr.py::test_create_e_contract_create_ne_contract_in_init_oog_tr[fork_Amsterdam--g1]
 stCreateTest/test_create_e_contract_then_call_to_non_existent_acc.py::test_create_e_contract_then_call_to_non_existent_acc[fork_Amsterdam]
-stCreateTest/test_create_empty_contract.py::test_create_empty_contract[fork_Amsterdam]
 stCreateTest/test_create_empty_contract_and_call_it_0wei.py::test_create_empty_contract_and_call_it_0wei[fork_Amsterdam]
 stCreateTest/test_create_empty_contract_and_call_it_1wei.py::test_create_empty_contract_and_call_it_1wei[fork_Amsterdam]
 stCreateTest/test_create_empty_contract_with_balance.py::test_create_empty_contract_with_balance[fork_Amsterdam]
@@ -253,18 +252,6 @@ stMemoryTest/test_call_data_copy_offset.py::test_call_data_copy_offset[fork_Amst
 stMemoryTest/test_code_copy_offset.py::test_code_copy_offset[fork_Amsterdam]
 stMemoryTest/test_oog.py::test_oog[fork_Amsterdam-success14]
 stMemoryTest/test_oog.py::test_oog[fork_Amsterdam-success15]
-
-# stNonZeroCallsTest (10)
-stNonZeroCallsTest/test_non_zero_value_call.py::test_non_zero_value_call[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_call_to_empty_paris.py::test_non_zero_value_call_to_empty_paris[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_call_to_one_storage_key_paris.py::test_non_zero_value_call_to_one_storage_key_paris[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_callcode.py::test_non_zero_value_callcode[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_callcode_to_empty_paris.py::test_non_zero_value_callcode_to_empty_paris[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_callcode_to_one_storage_key_paris.py::test_non_zero_value_callcode_to_one_storage_key_paris[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_delegatecall.py::test_non_zero_value_delegatecall[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_delegatecall_to_empty_paris.py::test_non_zero_value_delegatecall_to_empty_paris[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_delegatecall_to_non_non_zero_balance.py::test_non_zero_value_delegatecall_to_non_non_zero_balance[fork_Amsterdam]
-stNonZeroCallsTest/test_non_zero_value_delegatecall_to_one_storage_key_paris.py::test_non_zero_value_delegatecall_to_one_storage_key_paris[fork_Amsterdam]
 
 # stRefundTest (7)
 stRefundTest/test_refund50_2.py::test_refund50_2[fork_Amsterdam]

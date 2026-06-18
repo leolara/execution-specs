@@ -16,6 +16,7 @@ from execution_testing import (
     Transaction,
     compute_create_address,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -30,6 +31,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_create_empty_contract(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_create_empty_contract."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -62,13 +64,20 @@ def test_create_empty_contract(
         gas_limit=600000,
     )
 
+    # The gas remaining after the empty-contract CREATE drops on
+    # EIP-8037: the state gas for the new account makes the CREATE cost
+    # more. The gas measured before the CREATE (key 0) is unchanged.
+    gas_after_create = 0x7ABF8
+    if fork.is_eip_enabled(8037):
+        gas_after_create = 0x2C138
+
     post = {
         compute_create_address(address=contract_0, nonce=0): Account(nonce=1),
         contract_0: Account(
             storage={
                 0: 0x8D5B6,
                 1: compute_create_address(address=contract_0, nonce=0),
-                100: 0x7ABF8,
+                100: gas_after_create,
             },
         ),
     }
