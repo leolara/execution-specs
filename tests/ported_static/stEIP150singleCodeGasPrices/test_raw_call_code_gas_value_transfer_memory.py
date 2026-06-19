@@ -15,6 +15,7 @@ from execution_testing import (
     StateTestFiller,
     Transaction,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -31,6 +32,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_raw_call_code_gas_value_transfer_memory(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_raw_call_code_gas_value_transfer_memory."""
     coinbase = Address(0x2ADC25665018AA1FE0E6BC666DAC8FC2697FF9BA)
@@ -53,11 +55,18 @@ def test_raw_call_code_gas_value_transfer_memory(
     )
     # Source: lll
     # { [0] (GAS) (CALLCODE 30000 <contract:0x094f5374fce5edbc8e2a8697c15331677e6ebf0b> 10 0 8000 0 8000) [[1]] (SUB @0 (GAS)) }  # noqa: E501
+    # The callee's new-slot SSTORE costs 80820 gas more on EIP-8037
+    # (state gas). Forward that extra on Amsterdam so the inner call
+    # still completes and is measured.
+    inner_call_gas = 0x7530
+    if fork.is_eip_enabled(8037):
+        inner_call_gas = 0x7530 + 80820
+
     target = pre.deploy_contract(  # noqa: F841
         code=Op.MSTORE(offset=0x0, value=Op.GAS)
         + Op.POP(
             Op.CALLCODE(
-                gas=0x7530,
+                gas=inner_call_gas,
                 address=addr,
                 value=0xA,
                 args_offset=0x0,
@@ -79,9 +88,17 @@ def test_raw_call_code_gas_value_transfer_memory(
         value=10,
     )
 
+    # With the extra gas forwarded on EIP-8037 the inner call completes,
+    # but its measured cost and remaining gas differ; re-pin both.
+    gas_at_1 = 32308
+    gas_at_2 = 32298
+    if fork.is_eip_enabled(8037):
+        gas_at_1 = 113128
+        gas_at_2 = 113118
+
     post = {
         addr: Account(storage={}),
-        target: Account(storage={1: 32308, 2: 32298}),
+        target: Account(storage={1: gas_at_1, 2: gas_at_2}),
     }
 
     state_test(env=env, pre=pre, post=post, tx=tx)
