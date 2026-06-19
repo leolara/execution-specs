@@ -119,7 +119,12 @@ def test_refund_suicide50procent_cap(
             "network": [">=Cancun"],
             "result": {
                 target: Account(
-                    storage={10: 1, 11: 0, 23: 0x107A7},
+                    storage={
+                        10: 1,
+                        11: 0,
+                        # EIP-8037 reprices the measured gas at key 23.
+                        23: 0x2435B if fork.is_eip_enabled(8037) else 0x107A7,
+                    },
                     balance=0xDE0B6B3A7640000,
                 ),
                 sender: Account(nonce=1),
@@ -130,7 +135,11 @@ def test_refund_suicide50procent_cap(
             "network": [">=Cancun"],
             "result": {
                 target: Account(
-                    storage={10: 1, 11: 1, 23: 0x166FA},
+                    storage={
+                        10: 1,
+                        11: 1,
+                        23: 0x3DE62 if fork.is_eip_enabled(8037) else 0x166FA,
+                    },
                     balance=0x1BC16D674EC80000,
                 ),
                 sender: Account(nonce=1),

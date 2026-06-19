@@ -16,6 +16,7 @@ from execution_testing import (
     StateTestFiller,
     Transaction,
 )
+from execution_testing.forks import Fork
 from execution_testing.vm import Op
 
 REFERENCE_SPEC_GIT_PATH = "N/A"
@@ -30,6 +31,7 @@ REFERENCE_SPEC_VERSION = "N/A"
 def test_refund_tx_to_suicide(
     state_test: StateTestFiller,
     pre: Alloc,
+    fork: Fork,
 ) -> None:
     """Test_refund_tx_to_suicide."""
     coinbase = Address(0xEB201D2887816E041F6E807E804F64F3A7A226FE)
@@ -67,12 +69,18 @@ def test_refund_tx_to_suicide(
         value=10,
     )
 
+    # EIP-8037 changes the gas refund, so the sender keeps a different
+    # remaining balance on Amsterdam.
+    sender_balance = 0x5EDB318
+    if fork.is_eip_enabled(8037):
+        sender_balance = 0x5EC9212
+
     post = {
         Address(0x095E7BAEA6A6C7C4C2DFEB977EFAC326AF552D87): Account(
             storage={}, balance=0xDE0B6B3A764000A
         ),
         coinbase: Account(balance=0),
-        sender: Account(balance=0x5EDB318, nonce=1),
+        sender: Account(balance=sender_balance, nonce=1),
         target: Account(storage={1: 1}, balance=0, nonce=0),
     }
 
