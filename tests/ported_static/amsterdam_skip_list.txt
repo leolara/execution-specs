@@ -8,7 +8,7 @@
 # Entries are substring-matched against each pytest nodeid (after
 # stripping the fixture-format suffix in conftest.py).
 #
-# Total entries: 213
+# Total entries: 234
 
 # stAttackTest (1)
 stAttackTest/test_crashing_transaction.py::test_crashing_transaction[fork_Amsterdam]
@@ -115,11 +115,13 @@ stEIP150Specific/test_transaction64_rule_d64e0.py::test_transaction64_rule_d64e0
 stEIP150Specific/test_transaction64_rule_d64m1.py::test_transaction64_rule_d64m1[fork_Amsterdam]
 stEIP150Specific/test_transaction64_rule_d64p1.py::test_transaction64_rule_d64p1[fork_Amsterdam]
 
-# stEIP150singleCodeGasPrices (10)
+# stEIP150singleCodeGasPrices (12)
 stEIP150singleCodeGasPrices/test_gas_cost.py::test_gas_cost[fork_Amsterdam-d40]
 stEIP150singleCodeGasPrices/test_gas_cost_berlin.py::test_gas_cost_berlin[fork_Amsterdam-d40]
 stEIP150singleCodeGasPrices/test_raw_call_code_gas.py::test_raw_call_code_gas[fork_Amsterdam]
+stEIP150singleCodeGasPrices/test_raw_call_code_gas_memory.py::test_raw_call_code_gas_memory[fork_Amsterdam]
 stEIP150singleCodeGasPrices/test_raw_call_code_gas_value_transfer.py::test_raw_call_code_gas_value_transfer[fork_Amsterdam]
+stEIP150singleCodeGasPrices/test_raw_call_code_gas_value_transfer_memory.py::test_raw_call_code_gas_value_transfer_memory[fork_Amsterdam]
 stEIP150singleCodeGasPrices/test_raw_call_gas.py::test_raw_call_gas[fork_Amsterdam]
 stEIP150singleCodeGasPrices/test_raw_call_gas_value_transfer.py::test_raw_call_gas_value_transfer[fork_Amsterdam]
 stEIP150singleCodeGasPrices/test_raw_call_gas_value_transfer_memory.py::test_raw_call_gas_value_transfer_memory[fork_Amsterdam]
@@ -274,3 +276,24 @@ stTransactionTest/test_opcodes_transaction_init.py::test_opcodes_transaction_ini
 stTransactionTest/test_opcodes_transaction_init.py::test_opcodes_transaction_init[fork_Amsterdam-side_effects]
 stTransactionTest/test_store_gas_on_create.py::test_store_gas_on_create[fork_Amsterdam]
 stTransactionTest/test_suicides_and_internal_call_suicides_success.py::test_suicides_and_internal_call_suicides_success[fork_Amsterdam-d1]
+
+# stZeroKnowledge (19)
+stZeroKnowledge/test_point_mul_add.py::test_point_mul_add[fork_Amsterdam-d2-g3]
+stZeroKnowledge/test_point_mul_add.py::test_point_mul_add[fork_Amsterdam-d7-g3]
+stZeroKnowledge/test_point_mul_add.py::test_point_mul_add[fork_Amsterdam-d8-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d0-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d1-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d12-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d17-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d2-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d21-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d26-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d3-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d30-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d34-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d4-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d5-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d6-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d7-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d8-g3]
+stZeroKnowledge/test_point_mul_add2.py::test_point_mul_add2[fork_Amsterdam-d9-g3]

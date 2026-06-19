@@ -70,7 +70,7 @@ def test_raw_create_fail_gas_value_transfer2(
     # EIP-8037 changes the gas measured here; re-pin the value.
     gas_at_1 = 33391
     if fork.is_eip_enabled(8037):
-        gas_at_1 = 193991
+        gas_at_1 = 10391
 
     post = {
         contract_0: Account(storage={1: gas_at_1}),
