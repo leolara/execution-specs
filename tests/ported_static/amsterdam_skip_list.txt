@@ -8,7 +8,7 @@
 # Entries are substring-matched against each pytest nodeid (after
 # stripping the fixture-format suffix in conftest.py).
 #
-# Total entries: 228
+# Total entries: 229
 
 # stAttackTest (1)
 stAttackTest/test_crashing_transaction.py::test_crashing_transaction[fork_Amsterdam]
@@ -219,10 +219,11 @@ stMemoryTest/test_code_copy_offset.py::test_code_copy_offset[fork_Amsterdam]
 stMemoryTest/test_oog.py::test_oog[fork_Amsterdam-success14]
 stMemoryTest/test_oog.py::test_oog[fork_Amsterdam-success15]
 
-# stRefundTest (3)
+# stRefundTest (4)
 stRefundTest/test_refund50_2.py::test_refund50_2[fork_Amsterdam]
 stRefundTest/test_refund50percent_cap.py::test_refund50percent_cap[fork_Amsterdam]
 stRefundTest/test_refund600.py::test_refund600[fork_Amsterdam]
+stRefundTest/test_refund_tx_to_suicide.py::test_refund_tx_to_suicide[fork_Amsterdam]
 
 # stRevertTest (12)
 stRevertTest/test_loop_calls_depth_then_revert.py::test_loop_calls_depth_then_revert[fork_Amsterdam]
